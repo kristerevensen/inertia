@@ -32,4 +32,35 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('/users', function () {
+        return Inertia::render('Users');
+    })->name('users');
+    Route::get('/users/show', function () {
+        return Inertia::render('Users.show');
+    })->name('users.show');
+
+    Route::get('/settings/show', function () {
+        return Inertia::render('Settings.show');
+    })->name('settings.show');
+
+    Route::get('/settings', function () {
+        return Inertia::render('Settings');
+    })->name('settings');
+
+    Route::get('/pages', function () {
+        return Inertia::render('Pages');
+    })->name('pages');
+
+    Route::get('/seo', function () {
+        return Inertia::render('Seo');
+    })->name('seo');
+
+    Route::get('/campaigns', function () {
+        return Inertia::render('Campaigns');
+    })->name('campaigns');
+
+    Route::get('/experimentation', function () {
+        return Inertia::render('Experimentation');
+    })->name('experimentation');
 });

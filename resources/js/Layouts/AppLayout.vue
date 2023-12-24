@@ -49,7 +49,16 @@ const logout = () => {
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    Projects
+                                </NavLink>
+                                <NavLink :href="route('pages')" :active="route().current('pages')">
+                                    Pages
+                                </NavLink>
+                                <NavLink :href="route('campaigns')" :active="route().current('campaigns')">
+                                    Campaigns
+                                </NavLink>
+                                <NavLink :href="route('experimentation')" :active="route().current('experimentation')">
+                                    Experimentation
                                 </NavLink>
                             </div>
                         </div>
@@ -140,6 +149,14 @@ const logout = () => {
 
                                         <DropdownLink :href="route('profile.show')">
                                             Profile
+                                        </DropdownLink>
+
+                                        <DropdownLink :href="route('users.show')">
+                                            Users
+                                        </DropdownLink>
+
+                                        <DropdownLink :href="route('settings.show')">
+                                            Settings
                                         </DropdownLink>
 
                                         <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
