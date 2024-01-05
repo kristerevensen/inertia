@@ -16,8 +16,8 @@ import Welcome from '@/Components/Welcome.vue';
                 <div>
                     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                         <button type="button"
-                            class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add
-                            user</button>
+                            class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            Create Campaign</button>
                     </div>
                 </div>
             </div>
@@ -43,16 +43,19 @@ import Welcome from '@/Components/Welcome.vue';
                                                 <tr>
                                                     <th scope="col"
                                                         class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                                        Name</th>
+                                                        Campaign Name</th>
                                                     <th scope="col"
                                                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                        Title</th>
+                                                        Type</th>
                                                     <th scope="col"
                                                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                        Email</th>
+                                                        Channels</th>
                                                     <th scope="col"
                                                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                        Role</th>
+                                                        Links</th>
+                                                    <th scope="col"
+                                                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                        Clicks</th>
                                                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                                         <span class="sr-only">Edit</span>
                                                     </th>
@@ -62,12 +65,16 @@ import Welcome from '@/Components/Welcome.vue';
                                                 <tr>
                                                     <td
                                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                                        Lindsay Walton</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Front-end
-                                                        Developer</td>
+                                                        Winter Performance</td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                        lindsay.walton@example.com</td>
-                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Member
+                                                        Email</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        Newsletter</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        14
+                                                    </td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        3,457
                                                     </td>
                                                     <td
                                                         class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
@@ -75,13 +82,74 @@ import Welcome from '@/Components/Welcome.vue';
                                                                 class="sr-only">, Lindsay Walton</span></a>
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td
+                                                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                        Summer Blast Off</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        Social Media</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        Facebook Ads</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        22
+                                                    </td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        2,150
+                                                    </td>
+                                                    <td
+                                                        class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span
+                                                                class="sr-only">, Summer Blast Off</span></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                        Autumn Harvest</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        PPC</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        Google AdWords</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        18
+                                                    </td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        4,200
+                                                    </td>
+                                                    <td
+                                                        class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span
+                                                                class="sr-only">, Autumn Harvest</span></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                        Spring Awakening</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        Email</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        Promotional Blast</td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        27
+                                                    </td>
+                                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                        3,987
+                                                    </td>
+                                                    <td
+                                                        class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span
+                                                                class="sr-only">, Spring Awakening</span></a>
+                                                    </td>
+                                                </tr>
 
-                                            <!-- More people... -->
-                                        </tbody>
-                                    </table>
+
+                                                <!-- More people... -->
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
 

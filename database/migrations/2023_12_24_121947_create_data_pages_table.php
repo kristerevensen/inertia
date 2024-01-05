@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('hostname')->nullable();
             $table->string('protocol')->nullable();
             $table->string('pathname')->nullable();
+            $table->integer('bounce')->nullable();
             $table->string('language')->nullable();
             $table->string('bounce')->nullable();
             $table->string('entrance')->nullable();
