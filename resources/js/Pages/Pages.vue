@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+
 </script>
 
 <template>
@@ -12,6 +13,13 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="mb-5">
+                    <div class="relative flex flex-col rounded-lg bg-white bg-clip-border text-gray-700 shadow">
+                        <div class="relative h-350-px">
+
+                        </div>
+                    </div>
+                </div>
                 <div class="">
                     <div>
                         <h3 class="text-base font-semibold leading-6 text-gray-900">Last 30 days</h3>
@@ -37,6 +45,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
     </AppLayout>
 </template>
 
-<script setup>
+<script>
+
 
 </script>
