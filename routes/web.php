@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProjectsController;
 use App\Models\Project;
 use Illuminate\Foundation\Application;
@@ -33,6 +34,8 @@ Route::middleware([
 ])->group(function () {
 
     Route::get('/dashboard', [ProjectsController::class, 'index'])->name('dashboard');
+    Route::get('/pages', [PagesController::class, 'index'])->name('pages');
+
 
 
     Route::get('/users', function () {
@@ -50,9 +53,7 @@ Route::middleware([
         return Inertia::render('Settings');
     })->name('settings');
 
-    Route::get('/pages', function () {
-        return Inertia::render('Pages');
-    })->name('pages');
+
 
     Route::get('/seo', function () {
         return Inertia::render('Seo');

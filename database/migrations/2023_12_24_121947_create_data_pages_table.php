@@ -39,7 +39,7 @@ return new class extends Migration
             $table->integer('form_count')->nullable();
             $table->text('inbound_links')->nullable();
             $table->text('outbound_links')->nullable();
-            $table->foreign('owner_id')->references('id')->on('users'); // foreign key constraint
+            $table->foreign('project_data')->references('project_code')->on('projects'); // foreign key constraint
             $table->timestamps();
             // Additional columns as needed
         });
