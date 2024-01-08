@@ -26,10 +26,10 @@ return new class extends Migration
             $table->string('hostname')->nullable();
             $table->string('protocol')->nullable();
             $table->string('pathname')->nullable();
-            $table->integer('bounce')->nullable();
             $table->string('language')->nullable();
-            $table->string('bounce')->nullable();
-            $table->string('entrance')->nullable();
+            $table->integer('bounce')->default('0');
+            $table->integer('entrance')->default('0');
+            $table->integer('exits')->default('0');
             $table->text('meta_description')->nullable();
             $table->boolean('cookie_enabled')->nullable();
             $table->integer('screen_width')->nullable();
@@ -39,6 +39,9 @@ return new class extends Migration
             $table->integer('form_count')->nullable();
             $table->text('inbound_links')->nullable();
             $table->text('outbound_links')->nullable();
+            $table->boolean('analyzed')->default('0');
+            $table->timestamp('analyzed_at')->nullable();
+
             $table->foreign('project_data')->references('project_code')->on('projects'); // foreign key constraint
             $table->timestamps();
             // Additional columns as needed

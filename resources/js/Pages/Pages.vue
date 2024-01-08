@@ -25,7 +25,7 @@ function submit() {
             </h2>
         </template>
 
-        <div class="py-12">
+        <div class="mt-5">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="mb-5">
                     <div class="relative flex flex-col rounded-lg bg-white bg-clip-border text-gray-700 shadow">
@@ -59,10 +59,7 @@ function submit() {
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th scope="col" class="relative px-7 sm:w-12 sm:px-6">
-                                    <input type="checkbox"
-                                        class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                                </th>
+
                                 <th scope="col"
                                     class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                                     Page Path
@@ -73,11 +70,15 @@ function submit() {
                                 </th>
                                 <th scope="col"
                                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                    Bouncerate
+                                    Bounce%
                                 </th>
                                 <th scope="col"
                                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                    Entrances
+                                    Entrance%
+                                </th>
+                                <th scope="col"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Exit%
                                 </th>
                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                     <span class="sr-only">Edit</span>
@@ -86,13 +87,7 @@ function submit() {
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
                             <tr v-for="page in pages.data" :key="page.id">
-                                <td class="relative px-7 sm:w-12 sm:px-6">
-                                    <!-- Selected row marker, only show when row is selected. -->
-                                    <!-- <div class="absolute inset-y-0 left-0 w-0.5 bg-indigo-600"></div> -->
 
-                                    <input type="checkbox" value="{{ project.id }}"
-                                        class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
-                                </td>
                                 <td
                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                     {{ page.url }}
@@ -101,10 +96,13 @@ function submit() {
                                     {{ page.pageviews }}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{ page.bounce }}
+                                    {{ (page.bounce / page.pageviews * 100).toFixed(2) }}%
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{ page.entrance }}
+                                    {{ (page.entrance / page.pageviews * 100).toFixed(2) }}%
+                                </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                    {{ (page.exits / page.pageviews * 100).toFixed(2) }}%
                                 </td>
                                 <td
                                     class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
