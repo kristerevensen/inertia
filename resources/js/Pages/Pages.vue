@@ -1,54 +1,129 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from "@/Components/Paginator.vue";
-import { ref, reactive } from "vue";
+import { reactive, onMounted } from "vue";
 import { Link, router } from "@inertiajs/vue3";
+
 
 defineProps({
     pages: Array,
+    metrics: Array,
 });
 
-const form = reactive({
-    form_search: null,
-});
-
-function submit() {
-    router.post("/Dashboard", form);
+// Add the truncateUrl method here
+function truncateUrl(url) {
+    const maxLength = 50;
+    return url.length > maxLength ? `${url.substring(0, maxLength)}...` : url;
 }
+
+const dateSelector = reactive({
+    form_search: null,
+    fromDate: null,
+    toDate: null,
+});
+
+// Function to format date to YYYY-MM-DD
+function formatDate(date) {
+    return new Date(date).toISOString().split('T')[0];
+}
+
+// Set or retrieve dates when the component is mounted
+onMounted(() => {
+    const storedFromDate = localStorage.getItem('fromDate');
+    const storedToDate = localStorage.getItem('toDate');
+    const today = new Date();
+
+    if (storedFromDate && storedToDate) {
+        dateSelector.fromDate = storedFromDate;
+        dateSelector.toDate = storedToDate;
+    } else {
+        const fromDate = new Date();
+        fromDate.setDate(today.getDate() - 28); // Set to 28 days ago
+        dateSelector.fromDate = formatDate(fromDate);
+        dateSelector.toDate = formatDate(today);
+    }
+});
+
+// Method to submit date range and store in localStorage
+function submitDateRange() {
+    if (!dateSelector.fromDate || !dateSelector.toDate) {
+        alert('Please select both from and to dates');
+        return;
+    }
+
+    localStorage.setItem('fromDate', dateSelector.fromDate);
+    localStorage.setItem('toDate', dateSelector.toDate);
+
+    router.get('/pages', {
+        from: dateSelector.fromDate,
+        to: dateSelector.toDate
+    });
+
+    //console.log('Submitting:', dateSelector.fromDate, dateSelector.toDate);
+
+}
+
 </script>
 
 <template>
     <AppLayout title="Pages">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Pages
-            </h2>
+            <div class="flex justify-between">
+                <div>
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        Pages
+                    </h2>
+                </div>
+                <div>
+                    <div class="flex space-x-2">
+                            <input type="date" v-model="dateSelector.fromDate" class="border-gray-300 rounded-md">
+                            <input type="date" v-model="dateSelector.toDate" class="border-gray-300 rounded-md">
+                            <button @click="submitDateRange" class="px-4 py-2 bg-blue-500 text-white rounded-md">
+                                Data Period</button>
+
+                    </div>
+                </div>
+            </div>
+
+
         </template>
 
-        <div class="mt-5">
+
+
+        <div class="mt-10">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="mb-5">
-                    <div class="relative flex flex-col rounded-lg bg-white bg-clip-border text-gray-700 shadow">
-                        <div class="relative h-350-px">
+                    <div class="mt-5 mb-4">
 
-                        </div>
                     </div>
                 </div>
                 <div class="">
                     <div>
-                        <h3 class="text-base font-semibold leading-6 text-gray-900">Last 30 days</h3>
-                        <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+                        <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-5">
                             <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                                <dt class="truncate text-sm font-medium text-gray-500">Total Subscribers</dt>
-                                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">71,897</dd>
+                                <dt class="truncate text-sm font-medium text-gray-500">Sessions</dt>
+                                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{ metrics.sessions }}
+                                </dd>
                             </div>
                             <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                                <dt class="truncate text-sm font-medium text-gray-500">Avg. Open Rate</dt>
-                                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">58.16%</dd>
+                                <dt class="truncate text-sm font-medium text-gray-500">Pageviews</dt>
+                                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{ metrics.pageviews }}
+                                </dd>
                             </div>
                             <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                                <dt class="truncate text-sm font-medium text-gray-500">Avg. Click Rate</dt>
-                                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">24.57%</dd>
+                                <dt class="truncate text-sm font-medium text-gray-500">Entrances</dt>
+                                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{ metrics.entrances }}
+                                </dd>
+                            </div>
+                            <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                                <dt class="truncate text-sm font-medium text-gray-500">Exits</dt>
+                                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{ metrics.exits }}
+                                </dd>
+                            </div>
+                            <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+                                <dt class="truncate text-sm font-medium text-gray-500">Bounce</dt>
+                                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{ metrics.bounce }}
+                                </dd>
                             </div>
                         </dl>
                     </div>
@@ -64,20 +139,16 @@ function submit() {
                                     class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                                     Page Path
                                 </th>
-                                <th scope="col"
-                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Pageviews
                                 </th>
-                                <th scope="col"
-                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Bounce%
                                 </th>
-                                <th scope="col"
-                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Entrance%
                                 </th>
-                                <th scope="col"
-                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Exit%
                                 </th>
                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -88,9 +159,9 @@ function submit() {
                         <tbody class="divide-y divide-gray-200 bg-white">
                             <tr v-for="page in pages.data" :key="page.id">
 
-                                <td
-                                    class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                    {{ page.url }}
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                    <Link :href="`/page/view/${page.url_code}`" class="hover:underline">{{
+                                        truncateUrl(page.url) }}</Link>
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                     {{ page.pageviews }}
@@ -117,7 +188,7 @@ function submit() {
                         </tbody>
                     </table>
                 </div>
-                <Pagination :links="pages.links" class="mt-6" />
+                <Pagination :links="pages.links" class="mt-6 pb-10" />
             </div>
 
         </div>

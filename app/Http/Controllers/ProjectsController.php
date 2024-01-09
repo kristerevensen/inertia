@@ -16,7 +16,7 @@ class ProjectsController extends Controller
                         $query->where('name','like','%'. $request->input('search') .'%')
                         ->orWhere('domain','like','%'. $request->input('search') .'%');
                         })
-                        ->paginate(2); // Or any other query
+                        ->paginate(5); // Or any other query
         return Inertia::render('Dashboard', ['projects' => $projects]);
     }
 

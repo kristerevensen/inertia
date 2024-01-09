@@ -42,29 +42,7 @@ function submit() {
                     <div class="mt-0 flow-root">
                         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                                <div>
-                                    <div class="mb-20">
-                                        <h3 class="text-base font-semibold leading-6 text-gray-900">Last 30 days</h3>
-                                        <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-                                            <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                                                <dt class="truncate text-sm font-medium text-gray-500">Total Subscribers
-                                                </dt>
-                                                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">71,897
-                                                </dd>
-                                            </div>
-                                            <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                                                <dt class="truncate text-sm font-medium text-gray-500">Avg. Open Rate</dt>
-                                                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">58.16%
-                                                </dd>
-                                            </div>
-                                            <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                                                <dt class="truncate text-sm font-medium text-gray-500">Avg. Click Rate</dt>
-                                                <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">24.57%
-                                                </dd>
-                                            </div>
-                                        </dl>
-                                    </div>
-                                </div>
+
                                 <div>
                                     <form @submit.prevent="submit">
                                         <div class="flex justify-between ">
