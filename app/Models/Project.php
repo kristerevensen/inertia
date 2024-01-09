@@ -27,12 +27,6 @@ class Project extends Model
     public function index() {
 
     }
-    public function scopeSearch($query,$value){
-        $query->where('domain', 'like', "%{$value}%")
-        ->orWhere('name', 'like', "%{$value}%")
-        ->orWhere('description', 'like', "%{$value}%");
-
-    }
 
     public function owner() {
         return $this->belongsTo(User::class, 'owner_id');

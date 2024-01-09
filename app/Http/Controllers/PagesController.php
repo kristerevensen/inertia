@@ -46,9 +46,22 @@ class PagesController extends Controller
             ->orderBy('pageviews','desc')
             ->paginate(10);
 
+        // Append existing query parameters to the pagination links
+        $pages->appends([
+            'from' => $fromDate,
+            'to' => $toDate
+        ]);
+
         return Inertia::render('Pages', [
             'pages' => $pages,
             'metrics' => $metrics
+        ]);
+    }
+
+    public function show(Request $request) {
+
+        return Inertia::render('PageShow',[
+
         ]);
     }
 }

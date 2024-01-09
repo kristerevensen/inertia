@@ -55,6 +55,7 @@ function submitDateRange() {
     localStorage.setItem('toDate', dateSelector.toDate);
 
     router.get('/pages', {
+        preserveQuery: true,
         from: dateSelector.fromDate,
         to: dateSelector.toDate
     });
@@ -88,6 +89,12 @@ function submitDateRange() {
 
         </template>
 
+        <content>
+        <div v-if="$page.props.flash.message" class="alert">
+            {{ $page.props.flash.message }}
+        </div>
+        <slot />
+        </content>
 
 
         <div class="mt-10">

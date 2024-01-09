@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { ref, reactive, computed } from 'vue';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -10,6 +10,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
 defineProps({
     title: String,
+
 });
 
 const showingNavigationDropdown = ref(false);
@@ -25,6 +26,22 @@ const switchToTeam = (team) => {
 const logout = () => {
     router.post(route('logout'));
 };
+
+const page = usePage();
+const { props } = usePage();
+const projects = computed(() => page.props.projects)
+// page.props.auth.user.all_teams
+
+const switchToProject = (project) => {
+    router.put(route('current-project.update'), {
+        project_code: project.project_code,
+    }, {
+        preserveState: false,
+    });
+};
+
+
+
 </script>
 
 <template>
@@ -120,6 +137,10 @@ const logout = () => {
                                                     </form>
                                                 </template>
                                             </template>
+
+
+
+
                                         </div>
                                     </template>
                                 </Dropdown>
@@ -266,6 +287,30 @@ const logout = () => {
                                     Create New Team
                                 </ResponsiveNavLink>
 
+
+                                <!-- Project Switcher -->
+                                <template v-if="$page.props.projects > 1">
+                                    <div class="border-t border-gray-200" />
+
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        Switch Prpject
+                                    </div>
+
+                                    <template v-for="project in $page.props.projects" :key="project.project_code">
+                                        <form @submit.prevent="switchToProject(project)">
+                                            <ResponsiveNavLink as="button">
+                                                <div class="flex items-center">
+                                                    <svg v-if="project.project_code == $page.props.projects.current_project_code" class="me-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                    <div>{{ project.name }}</div>
+                                                </div>
+                                            </ResponsiveNavLink>
+                                        </form>
+                                    </template>
+                                </template>
+
+
                                 <!-- Team Switcher -->
                                 <template v-if="$page.props.auth.user.all_teams.length > 1">
                                     <div class="border-t border-gray-200" />
@@ -287,6 +332,8 @@ const logout = () => {
                                         </form>
                                     </template>
                                 </template>
+
+
                             </template>
                         </div>
                     </div>
