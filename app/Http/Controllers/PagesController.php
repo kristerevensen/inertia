@@ -106,7 +106,24 @@ class PagesController extends Controller
             'pageviews' => $pageviews
         ]);
     }
+    public function parseURL($url)
+    {
+        $parsedUrl = parse_url($url);
+        $pathname = $parsedUrl['path'] ?? ''; // $pathname will be "/page"
+        return $pathname;
+    }
+    function getUrlParameters($url) {
+        // Parse the URL and return its components
+        $parsedUrl = parse_url($url);
 
+        // Extract the query string
+        $queryString = $parsedUrl['query'] ?? '';
+
+        // Parse the query string into an associative array
+        $queryParams = [];
+        parse_str($queryString, $queryParams);
+        return array_keys($queryParams);
+    }
     public function show(Request $request, $url)
     {
         $fromDate = $request->input('from'); // Retrieve 'from' date from the request
@@ -145,7 +162,6 @@ class PagesController extends Controller
                 *
                 ')
             ->first();
-
         ### Pageview Query ###
         // Pageviews query with date filtering for chart
         $pageviewsQuery = DataPage::query()
@@ -184,11 +200,11 @@ class PagesController extends Controller
 
         $pageviews = response()->json($finalPageviews);
 
-
         return Inertia::render('PageShow', [
             'pageviews' => $pageviews,
             'metrics' => $metrics,
-            'page' => $pageData
+            'page' => $pageData,
+            'params' => $this->getUrlParameters($pageData->url),
         ]);
     }
 }

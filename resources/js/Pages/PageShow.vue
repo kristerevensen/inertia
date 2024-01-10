@@ -10,6 +10,7 @@ const props = defineProps({
     page: Object,
     metrics: Object, // changed to Object as it seems to be a singular object
     pageviews: Object,
+    params: Array,
 });
 
 
@@ -90,13 +91,14 @@ onMounted(() => {
     }
 });
 
+
+
 function drawChart() {
     var data = google.visualization.arrayToDataTable(chartData.value);
 
     var options = {
-        title: 'Pageviews Trend',
         curveType: 'function',
-        legend: { position: 'bottom' }
+        legend: { position: 'bottom' },
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -132,19 +134,19 @@ function drawChart() {
         <div class="mt-10">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="mb-5">
-                    <div class="mt-5 mb-4 flex justify-between bg-white border-gray-300 rounded-md py-2 px-2">
+                    <div class="mt-5 mb-4 flex justify-between py-2 px-2">
                         <div class="">
                             <h2>{{ page.title }} </h2>
                         </div>
                         <div>
-                            <span class="font-semibold">{{ page.url }}</span>
+                            <span class="font-semibold">{{ truncateUrl(page.url) }}</span>
                         </div>
                     </div>
                     <div>
 
                     </div>
                 </div>
-                <div class="">
+                <div class=""> <!-- start list of metrics --->
                     <div>
                         <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-5">
                             <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
@@ -175,13 +177,14 @@ function drawChart() {
                         </dl>
                     </div>
 
-                </div>
+                </div><!-- end list of metrics --->
                 <div>
                     <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-5">
                         <div class="sm:col-span-3 rounded-lg bg-white shadow sm:p-6">
                             <div id="curve_chart" style=" height: 300px"></div>
                         </div>
                         <div class="sm:col-span-2">
+                            <h2 class="px-2 py-2">Technical data</h2>
                             <ul role="list"
                                 class="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
                                 <li class="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6">
@@ -279,10 +282,43 @@ function drawChart() {
                     </dl>
                 </div>
 
+                <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+
+                    <div> <!-- start list of parameters --->
+                        <h2 class="px-2 py-2">Parameters</h2>
+                        <ul class="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+                            <li v-for="(parameter, index) in params" :key="index" class="relative flex justify-between gap-x-6 px-4 py-5  sm:px-6">
+                            <div class="flex min-w-0 gap-x-4">
+                                <div class="min-w-0 flex-auto">
+                                <p class="text-sm font-semibold leading-6 text-gray-900">
+
+                                    <span class="absolute inset-x-0 -top-px bottom-0"></span>
+                                    {{ parameter }}
+
+                                </p>
+
+                                </div>
+                            </div>
+                            <div class="flex shrink-0 items-center gap-x-4">
+                                <div class="hidden sm:flex sm:flex-col sm:items-end">
+                                    <p class="text-sm leading-6 text-gray-900">
+                                        <button class="bg-blue-500 text-white px-3 py-1 text-xs leading-5 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                                            Add to filter
+                                        </button>
+                                    </p>
+
+                                </div>
+                            </div>
+                            </li>
+
+                        </ul>
+                    </div> <!-- end list of parameters --->
+                </dl>
+
+
+
             </div>
-
         </div>
-
     </AppLayout>
 </template>
 
