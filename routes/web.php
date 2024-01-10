@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProjectsController;
 use App\Models\Project;
@@ -35,6 +36,7 @@ Route::middleware([
 
     Route::get('/dashboard', [ProjectsController::class, 'index'])->name('dashboard');
     Route::get('/pages', [PagesController::class, 'index'])->name('pages');
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
     Route::get('/page/view/{url_code}', [PagesController::class, 'show'])->name('page.view');
 
 

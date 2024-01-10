@@ -10,7 +10,7 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
-
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
         <!-- Scripts -->
         @routes
@@ -19,5 +19,7 @@
     </head>
     <body class="font-sans antialiased">
         @inertia
+
+
     </body>
 </html>

@@ -1,13 +1,17 @@
+
+
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from "@/Components/Paginator.vue";
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, ref } from "vue";
 import { Link, router } from "@inertiajs/vue3";
 
 
-defineProps({
-    pages: Array,
-    metrics: Array,
+
+const props = defineProps({
+    pages: Object,
+    metrics: Object, // changed to Object as it seems to be a singular object
+    pageviews: Object,
 });
 
 // Add the truncateUrl method here
@@ -32,13 +36,14 @@ onMounted(() => {
     const storedFromDate = localStorage.getItem('fromDate');
     const storedToDate = localStorage.getItem('toDate');
     const today = new Date();
+    today.setDate(today.getDate() - 1); // Set to yesterday
 
     if (storedFromDate && storedToDate) {
         dateSelector.fromDate = storedFromDate;
         dateSelector.toDate = storedToDate;
     } else {
         const fromDate = new Date();
-        fromDate.setDate(today.getDate() - 28); // Set to 28 days ago
+        fromDate.setDate(today.getDate() - 29); // Set to 28 days ago
         dateSelector.fromDate = formatDate(fromDate);
         dateSelector.toDate = formatDate(today);
     }
@@ -64,7 +69,41 @@ function submitDateRange() {
 
 }
 
+function formatDateChart(dateString) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const date = new Date(dateString);
+    const formattedDate = `${months[date.getMonth()]} ${date.getDate().toString().padStart(2, '0')}`;
+    return formattedDate;
+}
+
+const chartData = ref([]);
+
+// Convert pageviews data to Google Charts format
+onMounted(() => {
+    if (props.pageviews && props.pageviews.original) {
+        chartData.value.push(['Date', 'Pageviews']);
+        props.pageviews.original.forEach(item => {
+            chartData.value.push([formatDateChart(item.date), item.pageviews]);
+        });
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+    }
+});
+
+function drawChart() {
+    var data = google.visualization.arrayToDataTable(chartData.value);
+
+    var options = {
+        title: 'Pageviews Trend',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+    chart.draw(data, options);
+}
 </script>
+
 
 <template>
     <AppLayout title="Pages">
@@ -88,13 +127,6 @@ function submitDateRange() {
 
 
         </template>
-
-        <content>
-        <div v-if="$page.props.flash.message" class="alert">
-            {{ $page.props.flash.message }}
-        </div>
-        <slot />
-        </content>
 
 
         <div class="mt-10">
@@ -136,6 +168,12 @@ function submitDateRange() {
                     </div>
 
                 </div>
+
+                <div class="mt-10 rounded-lg bg-white  shadow sm:p-6">
+                    <div id="curve_chart" style="width:100%; height: 500px"></div>
+                </div>
+
+
 
                 <div class="overflow-hidden mt-10 shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-300">
@@ -203,7 +241,3 @@ function submitDateRange() {
     </AppLayout>
 </template>
 
-<script>
-
-
-</script>
