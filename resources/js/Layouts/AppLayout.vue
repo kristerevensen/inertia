@@ -72,7 +72,7 @@ const switchToProject = (project) => {
                                     Pages
                                 </NavLink>
                                 <NavLink :href="route('seo')" :active="route().current('seo')">
-                                    SEO
+                                    Keywords
                                 </NavLink>
                                 <NavLink :href="route('campaigns')" :active="route().current('campaigns')">
                                     Campaigns
