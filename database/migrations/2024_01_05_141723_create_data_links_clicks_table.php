@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLinkClicksTable extends Migration
+class CreateLinksClicksTable extends Migration
 {
     public function up()
     {
-        Schema::create('data_link_clicks', function (Blueprint $table) {
+        Schema::create('data_links_clicks', function (Blueprint $table) {
             $table->id();
             $table->string('session_id');
             $table->string('link_url');
@@ -22,14 +22,14 @@ class CreateLinkClicksTable extends Migration
             $table->integer('coordinates_x');
             $table->integer('coordinates_y');
             $table->string('project_code', 10)->unique(); // uniqye ID per project
-            $table->foreign('project_code_ref')->references('project_code')->on('projects'); // foreign key constraint
-            $table->foreign('url_code_ref')->references('url_code')->on('data_pages');
+            $table->foreign('project_code')->references('project_code')->on('projects'); // foreign key constraint
+            $table->foreign('url_code')->references('url_code')->on('data_pages');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('data_link_clicks');
+        Schema::dropIfExists('data_links_clicks');
     }
 }

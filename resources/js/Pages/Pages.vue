@@ -5,6 +5,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from "@/Components/Paginator.vue";
 import { reactive, onMounted, ref } from "vue";
 import { Link, router } from "@inertiajs/vue3";
+import NavLink from '@/Components/NavLink.vue';
 
 
 

@@ -20,4 +20,7 @@ class ProjectsController extends Controller
         return Inertia::render('Dashboard', ['projects' => $projects]);
     }
 
+    public function search(Request $request) {
+        
+    }
 }

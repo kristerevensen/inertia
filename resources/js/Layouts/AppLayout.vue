@@ -10,8 +10,10 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
 defineProps({
     title: String,
-
+    projects: Object,
 });
+
+
 
 const showingNavigationDropdown = ref(false);
 
@@ -28,18 +30,10 @@ const logout = () => {
 };
 
 const page = usePage();
+let current_project = "";
 const { props } = usePage();
-const projects = computed(() => page.props.projects)
-// page.props.auth.user.all_teams
-
-const switchToProject = (project) => {
-    router.put(route('current-project.update'), {
-        project_code: project.project_code,
-    }, {
-        preserveState: false,
-    });
-};
-
+const projects = computed(() => page.props.projects);
+console.log(projects);
 
 
 </script>
@@ -50,8 +44,8 @@ const switchToProject = (project) => {
 
         <Banner />
 
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+        <div class="min-h-screen bg-gray-100 ">
+            <nav class="bg-white border-b border-gray-100 border-b border-gray-200">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -64,7 +58,7 @@ const switchToProject = (project) => {
                             </div>
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex ">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Projects
                                 </NavLink>
@@ -83,8 +77,17 @@ const switchToProject = (project) => {
                             </div>
                         </div>
 
+
+
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <div class="ms-3 relative">
+
+
+
+</div>
+                            <div class="ms-3 relative">
+
+
                                 <!-- Teams Dropdown -->
                                 <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
                                     <template #trigger>
@@ -254,6 +257,8 @@ const switchToProject = (project) => {
                             </div>
                         </div>
 
+
+
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
                                 Profile
@@ -269,6 +274,8 @@ const switchToProject = (project) => {
                                     Log Out
                                 </ResponsiveNavLink>
                             </form>
+
+
 
                             <!-- Team Management -->
                             <template v-if="$page.props.jetstream.hasTeamFeatures">
@@ -288,27 +295,7 @@ const switchToProject = (project) => {
                                 </ResponsiveNavLink>
 
 
-                                <!-- Project Switcher -->
-                                <template v-if="$page.props.projects > 1">
-                                    <div class="border-t border-gray-200" />
 
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        Switch Prpject
-                                    </div>
-
-                                    <template v-for="project in $page.props.projects" :key="project.project_code">
-                                        <form @submit.prevent="switchToProject(project)">
-                                            <ResponsiveNavLink as="button">
-                                                <div class="flex items-center">
-                                                    <svg v-if="project.project_code == $page.props.projects.current_project_code" class="me-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                    </svg>
-                                                    <div>{{ project.name }}</div>
-                                                </div>
-                                            </ResponsiveNavLink>
-                                        </form>
-                                    </template>
-                                </template>
 
 
                                 <!-- Team Switcher -->
@@ -335,6 +322,9 @@ const switchToProject = (project) => {
 
 
                             </template>
+
+
+
                         </div>
                     </div>
                 </div>

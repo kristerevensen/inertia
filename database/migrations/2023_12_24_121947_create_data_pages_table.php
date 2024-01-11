@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('referrer')->nullable();
             $table->string('device_type')->nullable();
-            $table->integer('entrance')->nullable(); // Added entrance column
             $table->integer('session_start')->nullable(); // Added session_start column
             $table->string('project_code');
             $table->string('session_id')->nullable();
@@ -42,7 +41,7 @@ return new class extends Migration
             $table->boolean('analyzed')->default('0');
             $table->timestamp('analyzed_at')->nullable();
 
-            $table->foreign('project_data')->references('project_code')->on('projects'); // foreign key constraint
+            $table->foreign('project_code')->references('project_code')->on('projects'); // foreign key constraint
             $table->timestamps();
             // Additional columns as needed
         });
