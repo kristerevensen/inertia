@@ -60,7 +60,9 @@ function submitDateRange() {
     localStorage.setItem('fromDate', dateSelector.fromDate);
     localStorage.setItem('toDate', dateSelector.toDate);
 
-    router.get('/pages', {
+    let pagePath = window.location.pathname;
+
+    router.get(pagePath, {
         preserveQuery: true,
         from: dateSelector.fromDate,
         to: dateSelector.toDate

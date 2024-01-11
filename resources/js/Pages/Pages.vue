@@ -43,7 +43,7 @@ onMounted(() => {
         dateSelector.toDate = storedToDate;
     } else {
         const fromDate = new Date();
-        fromDate.setDate(today.getDate() - 29); // Set to 28 days ago
+        fromDate.setDate(today.getDate() - 29); // Set to last 28 days
         dateSelector.fromDate = formatDate(fromDate);
         dateSelector.toDate = formatDate(today);
     }
