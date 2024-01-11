@@ -107,7 +107,6 @@ const tabs = [
   { name: 'Technical', href: '#', current: false },
   { name: 'Content', href: '#', current: true },
   { name: 'Ranking', href: '#', current: false },
-  { name: 'Hired', href: '#', current: false },
 ]
 </script>
 
@@ -135,8 +134,11 @@ const tabs = [
                       <div class="sm:hidden">
                         <label for="current-tab" class="sr-only">Select a tab</label>
                         <select id="current-tab" name="current-tab" class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
-                          <option v-for="tab in tabs" :key="tab.name" :selected="tab.current" :active="route().current('pages')">{{ tab.name }}</option>
+                          <option v-for="tab in tabs" :key="tab.name" :selected="tab.current" >{{ tab.name }}</option>
                         </select>
+                        <NavLink :href="route('pages')" :active="route().current('pages')">
+                            Pages
+                        </NavLink>
                       </div>
                       <div class="hidden sm:block">
                         <nav class="-mb-px flex space-x-8">
