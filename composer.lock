@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "56f0da1da82b38396b3666ab7f24b644",
+    "content-hash": "0336a0a1270c11fe21ae2c6ffe484bd9",
     "packages": [
         {
             "name": "arielmejiadev/larapex-charts",
@@ -1284,6 +1284,49 @@
                 }
             ],
             "time": "2023-10-27T10:59:02+00:00"
+        },
+        {
+            "name": "jovix/dataforseo-clientv3",
+            "version": "v1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jovixv/DFSClient-v3.git",
+                "reference": "b3b7f8d28348986e26a9e8d9886eae3f63b3ef45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jovixv/DFSClient-v3/zipball/b3b7f8d28348986e26a9e8d9886eae3f63b3ef45",
+                "reference": "b3b7f8d28348986e26a9e8d9886eae3f63b3ef45",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": ">=7.0",
+                "php": ">=7.2",
+                "symfony/var-dumper": ">=5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DFSClientV3\\": "src/DFSClient/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Vitaliy Lyabakh",
+                    "email": "igrolan@gmail.com"
+                }
+            ],
+            "description": "PHP Client for DataForSeo",
+            "support": {
+                "issues": "https://github.com/jovixv/DFSClient-v3/issues",
+                "source": "https://github.com/jovixv/DFSClient-v3/tree/v1.1.4"
+            },
+            "time": "2021-09-18T13:11:19+00:00"
         },
         {
             "name": "laravel/fortify",

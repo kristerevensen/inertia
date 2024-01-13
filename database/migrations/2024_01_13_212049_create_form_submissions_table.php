@@ -26,5 +26,5 @@ class CreateFormSubmissionsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('form_submissions');
-    }git
+    }
 }
