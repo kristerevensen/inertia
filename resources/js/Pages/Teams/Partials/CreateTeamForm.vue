@@ -21,7 +21,7 @@ const createTeam = () => {
 <template>
     <FormSection @submitted="createTeam">
         <template #title>
-            Team Details
+            Project Details
         </template>
 
         <template #description>

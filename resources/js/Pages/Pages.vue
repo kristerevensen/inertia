@@ -36,19 +36,54 @@ function formatDate(date) {
 onMounted(() => {
     const storedFromDate = localStorage.getItem('fromDate');
     const storedToDate = localStorage.getItem('toDate');
-    const today = new Date();
-    today.setDate(today.getDate() - 1); // Set to yesterday
+    const storedDateSet = localStorage.getItem('dateSet');
 
-    if (storedFromDate && storedToDate) {
+    const today = new Date();
+    const formattedToday = formatDate(today);
+
+    // Check if the stored date is today's date
+    if (storedDateSet === formattedToday && storedFromDate && storedToDate) {
         dateSelector.fromDate = storedFromDate;
         dateSelector.toDate = storedToDate;
     } else {
-        const fromDate = new Date();
-        fromDate.setDate(today.getDate() - 29); // Set to last 28 days
+        // Set default dates to the last 28 days excluding today
+        const toDate = new Date(today);
+        toDate.setDate(toDate.getDate() - 1); // Set to yesterday
+
+        const fromDate = new Date(toDate);
+        fromDate.setDate(fromDate.getDate() - 27); // Set to 28 days before yesterday
+
         dateSelector.fromDate = formatDate(fromDate);
-        dateSelector.toDate = formatDate(today);
+        dateSelector.toDate = formatDate(toDate);
+
+        // Store the current date as the date set
+        localStorage.setItem('dateSet', formattedToday);
+        localStorage.setItem('fromDate', dateSelector.fromDate);
+        localStorage.setItem('toDate', dateSelector.toDate);
     }
 });
+
+
+if (!dateSelector.fromDate || !dateSelector.toDate) {
+    // Get today's date
+    let today = new Date();
+
+    // Set toDate as yesterday
+    let toDate = new Date(today);
+    toDate.setDate(toDate.getDate() - 1);
+
+    // Set fromDate as 28 days before yesterday
+    let fromDate = new Date(toDate);
+    fromDate.setDate(fromDate.getDate() - 27);
+
+    // Format dates to 'YYYY-MM-DD'
+    let formattedToDate = toDate.toISOString().split('T')[0];
+    let formattedFromDate = fromDate.toISOString().split('T')[0];
+
+    // Assign the default values
+    dateSelector.fromDate = formattedFromDate;
+    dateSelector.toDate = formattedToDate;
+}
 
 // Method to submit date range and store in localStorage
 function submitDateRange() {

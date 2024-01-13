@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Charts\PagesTrend;
 use App\Models\DataPage;
 use App\Models\Project;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class PagesController extends Controller
@@ -19,10 +21,15 @@ class PagesController extends Controller
         $fromDate = $request->input('from'); // Retrieve 'from' date from the request
         $toDate = $request->input('to');     // Retrieve 'to' date from the request
 
+        if (! $fromDate || ! $toDate) {
+            // Set $toDate to yesterday, as we are excluding today
+            $toDate = Carbon::yesterday()->toDateString();
 
+            // Set $fromDate to 28 days before $toDate
+            $fromDate = Carbon::yesterday()->subDays(27)->toDateString();
+        }
 
-
-
+        //DB::enableQueryLog();
 
         ### MetricsQuery ###
         // Metrics query with date filtering
@@ -72,6 +79,8 @@ class PagesController extends Controller
             $pageviewsQuery->whereBetween('created_at', [$fromDate, $toDate]);
         }
 
+
+
         $chartPageviews = $pageviewsQuery->selectRaw('
             count(url) as pageviews,
             date(created_at) as date
@@ -99,6 +108,8 @@ class PagesController extends Controller
         $finalPageviews = $allDatesPageviews->merge($chartPageviews)->values();
 
         $pageviews = response()->json($finalPageviews);
+
+        //dd($chartPageviews);
 
         return Inertia::render('Pages', [
             'pages' => $pages,

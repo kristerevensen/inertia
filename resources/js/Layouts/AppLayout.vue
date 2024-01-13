@@ -10,7 +10,6 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
 defineProps({
     title: String,
-    projects: Object,
 });
 
 
@@ -28,13 +27,6 @@ const switchToTeam = (team) => {
 const logout = () => {
     router.post(route('logout'));
 };
-
-const page = usePage();
-let current_project = "";
-const { props } = usePage();
-const projects = computed(() => page.props.projects);
-console.log(projects);
-
 
 </script>
 

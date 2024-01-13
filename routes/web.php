@@ -38,7 +38,7 @@ Route::middleware([
     Route::get('/pages', [PagesController::class, 'index'])->name('pages');
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
     Route::get('/page/view/{url_code}', [PagesController::class, 'show'])->name('page.view');
-    Route::put('/current-project', [ProjectsController::class, 'update'])->name('current-project.update');
+
 
 
 

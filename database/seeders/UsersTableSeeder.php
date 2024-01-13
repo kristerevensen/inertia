@@ -32,8 +32,7 @@ class UsersTableSeeder extends Seeder
     {
         $teamId = DB::table('teams')->insertGetId([
             'user_id' => $userId,
-            'team_code' => 'tm1234', // unique team code
-            'name' => 'Admin Team',
+            'name' => 'Primary Team',
             'personal_team' => true,
             // Other fields can have default values or specific values as needed
         ]);

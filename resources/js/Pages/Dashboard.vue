@@ -5,7 +5,7 @@ import { ref, reactive } from "vue";
 import { Link, router } from "@inertiajs/vue3";
 
 defineProps({
-    projects: Array,
+    projects: Object,
 });
 
 const form = reactive({
