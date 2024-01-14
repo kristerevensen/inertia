@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('click_type');
             $table->integer('coordinates_x');
             $table->integer('coordinates_y');
-            $table->varchar('coordinates');
+            $table->string('coordinates');
             $table->string('project_code', 10)->unique(); // uniqye ID per project
             $table->foreign('project_code')->references('project_code')->on('projects'); // foreign key constraint
             $table->foreign('url_code')->references('url_code')->on('data_pages');
