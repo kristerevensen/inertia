@@ -19,7 +19,7 @@ class ProjectSeeder extends Seeder
         $user = User::where('email', 'k@mcminn.no')->first();
         $team = Team::where('user_id', $user->id)->first();
         if ($user && $team) {
-            for ($i = 1; $i <= 10; $i++) {
+            for ($i = 1; $i <= 1; $i++) {
                 DB::table('projects')->insert([
                     'name' => 'Project ' . $i,
                     'owner_id' => $user->id,
