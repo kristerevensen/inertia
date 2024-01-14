@@ -4,9 +4,10 @@ import Pagination from "@/Components/Paginator.vue";
 import { ref, reactive } from "vue";
 import { Link, router } from "@inertiajs/vue3";
 
-defineProps({
+ defineProps({
     projects: Object,
 });
+
 
 const form = reactive({
     form_search: null,
@@ -133,5 +134,6 @@ function submit() {
                 </div>
             </div>
         </div>
-    </AppLayout></template>
+    </AppLayout>
+    </template>
 
