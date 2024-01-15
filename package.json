@@ -21,6 +21,8 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
+        "@headlessui/vue": "^1.7.17",
+        "@heroicons/vue": "^2.1.1",
         "autoprefixer": "^10.4.16",
         "nprogress": "^0.2.0"
     }
