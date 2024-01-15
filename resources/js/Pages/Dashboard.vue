@@ -98,8 +98,15 @@ function submit() {
                               <textarea id="description" v-model="form.projectDescription" name="description" rows="4" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                             </div>
                           </div>
+                          <div>
+                            <label for="project-name" class="block text-sm font-medium leading-6 text-gray-900">Domain</label>
+                            <div class="mt-2">
+                              <input type="text" v-model="form.domain" name="project-domain" id="project-domain" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                            </div>
+                          </div>
                         </div>
                       </div>
+      
                       <div class="flex flex-1 flex-col justify-between">
                         <div class="divide-y divide-gray-200 px-4 sm:px-6">
                             <div class="space-y-6 pb-5 pt-6">
