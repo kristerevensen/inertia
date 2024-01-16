@@ -1,12 +1,16 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { PhotoIcon, UserCircleIcon } from '@heroicons/vue/24/solid'
-import { computed, defineProps } from 'vue'
+import { computed, defineProps, ref } from 'vue'
 
 const props = defineProps({
     project: Object,
     projectCode: String,
 });
+
+
+const selectedCountry = ref(''); // Default value can be set here
+const selectedLanguage = ref(''); // Default value can be set here
 
 let project = props.project;
 
@@ -27,25 +31,40 @@ const trackingScript = computed(() => {
 </` + `script>`;
 });
 
-
+const tabs = [
+  { name: 'Settings', href: `/project/${project.project_code}/settings`, current: false },
+  { name: 'Filters', href: `/project/${project.project_code}/filters`, current: false },
+];
 </script>
 
 
 <template>
     <AppLayout title="Edit Project">
-        <template #header>
-            <div class="flex justify-between">
-                <div>
-                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                        {{ $page.props.project.name }}
-                    </h2>
-                </div>
-
-            </div>
-        </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px lg:px-0">
                 <div class="sm:px-6 lg:px-8">
+                    <div class="relative border-b border-gray-200 pb-5 sm:pb-0 mb-10">
+                        <div class="md:flex md:items-center md:justify-between">
+                            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        Project Settings
+                    </h2>
+
+                        </div>
+                        <div class="mt-4">
+                        <div class="sm:hidden">
+                            <select id="current-tab" name="current-tab" class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
+                            <option v-for="tab in tabs" :key="tab.name" :selected="tab.current">{{ tab.name }}</option>
+                            </select>
+                        </div>
+                        <div class="hidden sm:block">
+                            <nav class="-mb-px flex space-x-8">
+                            <a v-for="tab in tabs" :key="tab.name" :href="tab.href" :class="[tab.current ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium']" :aria-current="tab.current ? 'page' : undefined">{{ tab.name }}</a>
+                            </nav>
+                        </div>
+                        </div>
+                    </div>
+
+
                     <div class="space-y-10 divide-y divide-gray-900/10">
                         <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
                             <div class="px-4 sm:px-0">
@@ -109,62 +128,63 @@ const trackingScript = computed(() => {
                                     <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                         <div class="sm:col-span-3">
                                             <label for="first-name"
-                                                class="block text-sm font-medium leading-6 text-gray-900">Project Name</label>
+                                                class="block text-sm font-medium leading-6 text-gray-900">Project
+                                                Name</label>
                                             <div class="mt-2">
-                                                <input
-                                                    type="text"
-                                                    v-model="project.name"
-                                                    name="name"
-                                                    id="project_name"
-
+                                                <input type="text" v-model="project.name" name="name" id="project_name"
                                                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                             </div>
                                         </div>
 
                                         <div class="sm:col-span-3">
                                             <label for="last-name"
-                                                class="block text-sm font-medium leading-6 text-gray-900">Project Domain</label>
+                                                class="block text-sm font-medium leading-6 text-gray-900">Project
+                                                Domain</label>
                                             <div class="mt-2">
-                                                <input
-                                                    type="text"
-                                                    name="domain"
-                                                    v-model="project.domain"
+                                                <input type="text" name="domain" v-model="project.domain"
                                                     id="project_domain"
                                                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                             </div>
                                         </div>
 
-                                        <div class="sm:col-span-4">
+                                        <div class="sm:col-span-6">
                                             <label for="email"
-                                                class="block text-sm font-medium leading-6 text-gray-900">Email
-                                                address</label>
+                                                class="block text-sm font-medium leading-6 text-gray-900">Project
+                                                Description</label>
                                             <div class="mt-2">
-                                                <input id="email" name="email" type="email" autocomplete="email"
-                                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                                <textarea id="about" v-model="project.description" name="about" rows="10"
+                                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                                </textarea>
+
                                             </div>
                                         </div>
 
+                                        <!-- Country Select -->
                                         <div class="sm:col-span-3">
                                             <label for="country"
                                                 class="block text-sm font-medium leading-6 text-gray-900">Country</label>
                                             <div class="mt-2">
                                                 <select id="country" name="country" autocomplete="country-name"
+                                                    v-model="selectedCountry"
                                                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                                    <option>Norway</option>
-                                                    <option>Canada</option>
-                                                    <option>Mexico</option>
+                                                    <option value="Norway">Norway</option>
+                                                    <option value="Canada">Canada</option>
+                                                    <option value="Mexico">Mexico</option>
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <!-- Language Select -->
                                         <div class="sm:col-span-3">
-                                            <label for="country"
+                                            <label for="language"
                                                 class="block text-sm font-medium leading-6 text-gray-900">Language</label>
                                             <div class="mt-2">
-                                                <select id="country" name="country" autocomplete="country-name"
+                                                <select id="language" name="language" autocomplete="language-name"
+                                                    v-model="selectedLanguage"
                                                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                                    <option>no-nb</option>
-                                                    <option>Language2</option>
-                                                    <option>Language3</option>
+                                                    <option value="no-nb">no-nb</option>
+                                                    <option value="Language2">Language2</option>
+                                                    <option value="Language3">Language3</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -222,7 +242,7 @@ const trackingScript = computed(() => {
                         </div>
 
 
-                    <div class="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
+                        <div class="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
                             <div class="px-4 sm:px-0">
                                 <h2 class="text-base font-semibold leading-7 text-gray-900">Delete Project</h2>
                                 <p class="mt-1 text-sm leading-6 text-gray-600">This action cannot be undone.</p>
@@ -233,17 +253,17 @@ const trackingScript = computed(() => {
                                 <div
                                     class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
 
-                                    <button
-                                        type="submit"
+                                    <button type="submit"
                                         @click="event.preventDefault(); if (confirm('Are you sure you want to delete this project?')) { document.getElementById('delete-project-form').submit(); }"
                                         class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                                         Delete Project</button>
                                 </div>
                             </form>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</AppLayout></template>
+    </AppLayout>
+</template>
 
