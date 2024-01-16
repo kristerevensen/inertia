@@ -10,6 +10,11 @@ const props = defineProps({
 
 let project = props.project;
 
+const copyTrackingCode = () => {
+    navigator.clipboard.writeText(trackingScript.value);
+    alert('Tracking code copied to clipboard');
+}
+
 const trackingScript = computed(() => {
     return `<!-- MeasureTank Tracking Snippet -->
 <script>
@@ -22,10 +27,7 @@ const trackingScript = computed(() => {
 </` + `script>`;
 });
 
-const copyTrackingCode = () => {
-    navigator.clipboard.writeText(trackingScript.value);
-    alert('Tracking code copied to clipboard');
-}
+
 </script>
 
 
