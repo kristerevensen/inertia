@@ -37,7 +37,6 @@ const form = useForm({
     domain: '',
 });
 
-console.log(form);
 
 
 let submit = () => {
