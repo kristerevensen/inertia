@@ -46,7 +46,8 @@ class ProjectsController extends Controller
 
         //dd($project);
         return Inertia::render('Projects/Edit', [
-            'project' => $project
+            'project' => $project,
+            'project_code' => $project_code
         ]);
     }
     public function store(Request $request)
