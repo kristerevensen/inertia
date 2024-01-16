@@ -33,7 +33,7 @@ const form = useForm({
     form_search: null,
     projectName: '',
     description: '',
-    selectedTeamId: selectedTeam.value.id || null,
+    selectedTeamId: '',
     domain: '',
 });
 
