@@ -35,9 +35,13 @@ Route::middleware([
 ])->group(function () {
 
     Route::get('/dashboard', [ProjectsController::class, 'index'])->name('dashboard');
+    Route::post('/project/store', [ProjectsController::class, 'store']);
+    Route::get('/project/{url_code}/edit', [ProjectsController::class, 'edit']);
     Route::get('/pages', [PagesController::class, 'index'])->name('pages');
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
     Route::get('/page/view/{url_code}', [PagesController::class, 'show'])->name('page.view');
+
+    Route::get('/projects/{url_code}/edit', [ProjectsController::class, 'edit'])->name('project.edit');
 
 
 

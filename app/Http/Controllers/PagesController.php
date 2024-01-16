@@ -111,7 +111,7 @@ class PagesController extends Controller
 
         //dd($chartPageviews);
 
-        return Inertia::render('Pages', [
+        return Inertia::render('Pages/Index', [
             'pages' => $pages,
             'metrics' => $metrics,
             'pageviews' => $pageviews

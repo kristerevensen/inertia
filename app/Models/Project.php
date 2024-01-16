@@ -16,14 +16,18 @@ class Project extends Model
     protected $fillable = [
         'name',
         'domain',
-        'website_categories',
+        'categories',
         'owner_id',
         'updated_at',
         'created_at',
         'access',
         'team_id',
         'project_code',
+        'language',
+        'country',
+        'description',
     ];
+
     public function index() {
 
     }
@@ -42,7 +46,7 @@ class Project extends Model
         parent::boot();
 
         static::creating(function ($project) {
-            $project->prosjekt_id = Str::random(8); // Genererer en 8-tegns lang ID
+            $project->project_code = Str::random(8); // Genererer en 8-tegns lang ID
         });
     }
 }
