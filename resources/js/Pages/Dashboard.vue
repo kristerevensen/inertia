@@ -6,7 +6,14 @@ import { Link, router } from "@inertiajs/vue3";
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
-
+import {
+  CalendarIcon,
+  ChartPieIcon,
+  DocumentDuplicateIcon,
+  FolderIcon,
+  HomeIcon,
+  UsersIcon,
+} from '@heroicons/vue/24/outline'
 
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { LinkIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/vue/20/solid'
@@ -106,7 +113,7 @@ function submit() {
                           </div>
                         </div>
                       </div>
-      
+
                       <div class="flex flex-1 flex-col justify-between">
                         <div class="divide-y divide-gray-200 px-4 sm:px-6">
                             <div class="space-y-6 pb-5 pt-6">
