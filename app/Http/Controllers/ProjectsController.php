@@ -75,12 +75,12 @@ class ProjectsController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Project created successfully');
     }
-    public function delete(Request $request, Project $project_code)
+    public function delete(Request $request, $project_code)
     {
-        $project = Project::query()
-                    ->where('project_code', $project_code)
-                    ->where('owner_id', Auth::user()->id)
-                    ->firstOrFail();
+        $deleted = Project::query()
+            ->where('project_code', $project_code)
+            ->where('owner_id', Auth::user()->id)
+            ->delete();
 
         redirect()->route('dashboard')->with('success', 'Project deleted successfully');
     }

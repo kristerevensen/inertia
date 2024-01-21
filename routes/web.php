@@ -41,7 +41,7 @@ Route::middleware([
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
     Route::get('/page/view/{url_code}', [PagesController::class, 'show'])->name('page.view');
 
-    Route::get('/projects/{url_code}/edit', [ProjectsController::class, 'edit'])->name('project.edit');
+    Route::get('/project/{url_code}/delete', [ProjectsController::class, 'delete'])->name('project.delete');
 
 
 

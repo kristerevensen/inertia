@@ -32,7 +32,7 @@ let processesing = ref(false);
 const form = useForm({
     form_search: null,
     projectName: '',
-    description: '',
+    projectDescription: '',
     selectedTeamId: '',
     domain: '',
 });
@@ -41,8 +41,10 @@ const form = useForm({
 
 let submit = () => {
     // Add the selected team's ID to the form data
-    form.data.selectedTeamId = selectedTeam.value.id; // Update the selected team ID
+    form.selectedTeamId = selectedTeam.value.id; // Update the selected team ID
     form.post("/project/store");
+    console.log(form);
+    console.log(form.selectedTeamId);
     processesing.value = true;
     form.reset();
 }
@@ -128,8 +130,8 @@ let submit = () => {
                                                                 <label for="description"
                                                                     class="block text-sm font-medium leading-6 text-gray-900">Description</label>
                                                                 <div class="mt-2">
-                                                                    <textarea id="description"
-                                                                        v-model="form.projectDescription" name="description"
+                                                                    <textarea id="projectDescription"
+                                                                        v-model="form.projectDescription" name="projectDescription"
                                                                         rows="4"
                                                                         class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                                                 </div>
