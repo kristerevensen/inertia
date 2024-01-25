@@ -224,6 +224,35 @@ class PagesController extends Controller
             'metrics' => $metrics,
             'page' => $pageData,
             'params' => $this->getUrlParameters($pageData->url),
+            'changes' => $this->getChanges($pageData->url),
+            'sources' => $this->getSources($pageData->url),
         ]);
+    }
+    public function getSources($url)
+    {
+        $sources = DB::table('data_pages')
+            ->where('project_code', $this->project_code)
+            ->where('url', $url)
+          
+            ->orderBy('count', 'desc')
+            ->groupBy('source')
+            ->get();
+
+        return $sources;
+    }
+    public function getChanges($url)
+    {
+        $changes = DB::table('data_pages')
+            ->where('project_code', $this->project_code)
+            ->where('url', $url)
+            ->selectRaw('
+                distinct(content_hash),
+                created_at
+                ')
+            ->orderBy('created_at', 'desc')
+            ->groupBy('content_hash', 'created_at')
+            ->get();
+
+        return $changes;
     }
 }
