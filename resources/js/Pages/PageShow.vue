@@ -11,8 +11,10 @@ const props = defineProps({
     metrics: Object, // changed to Object as it seems to be a singular object
     pageviews: Object,
     params: Array,
+    sources: Object,
 });
 
+console.log(props.sources);
 
 
 // Add the truncateUrl method here
@@ -337,50 +339,50 @@ function drawChart() {
 
                                                 <th scope="col"
                                                     class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                                    Name
+                                                    Traffic Source
                                                 </th>
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Domain
+                                                    Sessions
                                                 </th>
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Team
+                                                    Pageviews
                                                 </th>
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Language
+                                                    Bounce Rate
                                                 </th>
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                    Country
+                                                    Entrance Rate
                                                 </th>
-                                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                                    Settings
+                                                <th scope="col"  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                    Exit Rate
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-gray-200 bg-white">
-                                            <tr >
+                                            <tr v-for="source in sources" :key="source.id">
                                                 <td
                                                     class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                                    <b></b>
+                                                    <b>{{ source.source_type }}</b>
                                                 </td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                    </td>
+                                                    {{ source.sessions }}</td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    {{ source.pageviews }}
+                                                </td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    {{ (source.bounces / source.pageviews * 100).toFixed(0) }}%
+                                                </td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    {{ (source.entrances / source.pageviews * 100).toFixed(0) }}%
+                                                </td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    {{ (source.exits / source.pageviews * 100).toFixed(0) }}%
+                                                </td>
 
-                                                </td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-
-                                                </td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-
-                                                </td>
-                                                <td class="whitespace-nowrap px-3 py-4 text flex justify-center">
-                                                    <a :href="``"
-                                                        class=" rounded bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">View</a>
-                                                </td>
                                             </tr>
 
                                             <!-- More people... -->

@@ -230,15 +230,75 @@ class PagesController extends Controller
     }
     public function getSources($url)
     {
-        $sources = DB::table('data_pages')
+        $rawSources = DB::table('data_pages')
             ->where('project_code', $this->project_code)
             ->where('url', $url)
-          
-            ->orderBy('count', 'desc')
-            ->groupBy('source')
+            ->select(
+                'referrer',
+                DB::raw('count(*) as count'),
+                DB::raw('count(*) as pageviews'),
+                DB::raw('count(distinct(session_id)) as sessions'),
+                DB::raw('sum(bounce) as bounces'),
+                DB::raw('sum(entrance) as entrances'),
+                DB::raw('sum(exits) as exits')
+            )
+            ->groupBy('referrer')
             ->get();
 
-        return $sources;
+        $categorizedSources = $rawSources->mapToGroups(function ($item) {
+            $sourceType = $this->categorizeSource($item->referrer);
+            return [$sourceType => $item];
+        });
+
+        $summarizedSources = $categorizedSources->map(function ($group, $sourceType) {
+            return [
+                'source_type' => $sourceType,
+                'count' => $group->sum('count'),
+                'pageviews' => $group->sum('pageviews'),
+                'sessions' => $group->sum('sessions'),
+                'bounces' => $group->sum('bounces'),
+                'entrances' => $group->sum('entrances'),
+                'exits' => $group->sum('exits'),
+            ];
+        });
+
+        return $summarizedSources;
+    }
+    private function categorizeSource($referrer)
+    {
+        if (empty($referrer)) {
+            return 'Direct Traffic';
+        }
+
+        $parsedUrl = parse_url($referrer);
+        $host = strtolower($parsedUrl['host'] ?? '');
+
+        // Define arrays of hostnames for different categories
+        $searchEngines = ['google', 'bing', 'yahoo', 'baidu', 'duckduckgo'];
+        $socialMedia = ['facebook', 'twitter', 'linkedin', 'instagram', 'pinterest'];
+
+        // Check if the referrer matches any known search engines
+        foreach ($searchEngines as $searchEngine) {
+            if (strpos($host, $searchEngine) !== false) {
+                return 'Organic Search';
+            }
+        }
+
+        // Check if the referrer matches any known social media platforms
+        foreach ($socialMedia as $social) {
+            if (strpos($host, $social) !== false) {
+                return 'Social Media';
+            }
+        }
+        // Check for Paid Search (basic approach, might require UTM parameter checks)
+        if (strpos($referrer, 'utm_medium=cpc') !== false || strpos($referrer, 'gclid=') !== false) {
+            return 'Paid Search';
+        }
+
+        // Add more checks here for other categories like 'Paid Search', 'Referral', etc.
+
+        // Default category
+        return 'Referral Traffic';
     }
     public function getChanges($url)
     {
