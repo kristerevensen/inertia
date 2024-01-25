@@ -59,9 +59,9 @@ class PagesController extends Controller
 
         $pages = $pagesQuery->selectRaw('
                 COUNT(url) as pageviews,
-                COUNT(bounce) as bounces,
-                COUNT(entrance) as entrances,
-                COUNT(exits) as exits,
+                sum(bounce) as bounces,
+                sum(entrance) as entrances,
+                sum(exits) as exits,
                 url,
                 project_code,
                 url_code
