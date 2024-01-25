@@ -10,6 +10,7 @@ use Inertia\Inertia;
 
 class ProjectsController extends Controller
 {
+    protected $project_code;
     public function index(Request $request)
     {
 

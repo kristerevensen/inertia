@@ -4,19 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Charts\PagesTrend;
 use App\Models\DataPage;
-use App\Models\Project;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class PagesController extends Controller
 {
-    protected $project_code = "P00000001";
+    protected $project_code;
+
 
     public function index(Request $request, PagesTrend $chart)
     {
+        $this->project_code = session('selected_project_code');
+
 
         $fromDate = $request->input('from'); // Retrieve 'from' date from the request
         $toDate = $request->input('to');     // Retrieve 'to' date from the request
@@ -40,12 +43,15 @@ class PagesController extends Controller
             $metricsQuery->whereBetween('created_at', [$fromDate, $toDate]);
         }
 
+
         $metrics = $metricsQuery->selectRaw('
-                count(distinct(session_id)) as sessions, count(*) as pageviews,
-                count(entrance) as entrances,
-                count(exits) as exits,
-                count(bounce) as bounce
+                count(distinct(session_id)) as sessions,
+                count(*) as pageviews,
+                sum(entrance) as entrances,
+                sum(exits) as exits,
+                sum(bounce) as bounce
                 ')
+                ->groupBy('project_code')
             ->first();
 
 
@@ -315,4 +321,13 @@ class PagesController extends Controller
 
         return $changes;
     }
+    public function getSelectedProject($teamID){
+        return DB::table('projects')
+            ->where('team_id', $teamID)
+            ->select('project_code')
+            ->first()
+            ->project_code;
+
+    }
+
 }
