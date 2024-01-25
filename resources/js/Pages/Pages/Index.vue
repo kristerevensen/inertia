@@ -264,13 +264,13 @@ const tabs = [
                                     {{ page.pageviews }}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{ (page.bounce / page.pageviews * 100).toFixed(2) }}%
+                                    {{ (page.bounces / page.pageviews * 100).toFixed(0) }}%
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{ (page.entrance / page.pageviews * 100).toFixed(2) }}%
+                                    {{ (page.entrances / page.pageviews * 100).toFixed(0) }}%
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{ (page.exits / page.pageviews * 100).toFixed(2) }}%
+                                    {{ (page.exits / page.pageviews * 100).toFixed(0) }}%
                                 </td>
                                 <td
                                     class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">

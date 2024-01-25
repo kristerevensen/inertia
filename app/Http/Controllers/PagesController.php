@@ -44,7 +44,7 @@ class PagesController extends Controller
                 count(distinct(session_id)) as sessions, count(*) as pageviews,
                 count(entrance) as entrances,
                 count(exits) as exits,
-                count(distinct(bounce)) as bounce
+                count(bounce) as bounce
                 ')
             ->first();
 
@@ -57,7 +57,15 @@ class PagesController extends Controller
             $pagesQuery->whereBetween('created_at', [$fromDate, $toDate]);
         }
 
-        $pages = $pagesQuery->selectRaw('COUNT(url) as pageviews, SUM(bounce) as bounce, SUM(entrance) as entrances, url, project_code, url_code')
+        $pages = $pagesQuery->selectRaw('
+                COUNT(url) as pageviews,
+                COUNT(bounce) as bounces,
+                COUNT(entrance) as entrances,
+                COUNT(exits) as exits,
+                url,
+                project_code,
+                url_code
+                ')
             ->groupBy('project_code', 'url', 'url_code')
             ->orderBy('pageviews', 'desc')
             ->paginate(10);
