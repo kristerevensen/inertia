@@ -18,8 +18,12 @@ class PagesController extends Controller
 
     public function index(Request $request, PagesTrend $chart)
     {
-        $this->project_code = session('selected_project_code');
-
+        $teamID = DB::table('users')
+            ->where('id', Auth::user()->id)
+            ->select('current_team_id')
+            ->first()
+            ->current_team_id;
+        $this->project_code = $this->getSelectedProject($teamID);
 
         $fromDate = $request->input('from'); // Retrieve 'from' date from the request
         $toDate = $request->input('to');     // Retrieve 'to' date from the request
@@ -43,15 +47,12 @@ class PagesController extends Controller
             $metricsQuery->whereBetween('created_at', [$fromDate, $toDate]);
         }
 
-
         $metrics = $metricsQuery->selectRaw('
-                count(distinct(session_id)) as sessions,
-                count(*) as pageviews,
-                sum(entrance) as entrances,
-                sum(exits) as exits,
-                sum(bounce) as bounce
+                count(distinct(session_id)) as sessions, count(*) as pageviews,
+                count(entrance) as entrances,
+                count(exits) as exits,
+                count(bounce) as bounce
                 ')
-                ->groupBy('project_code')
             ->first();
 
 
@@ -321,13 +322,18 @@ class PagesController extends Controller
 
         return $changes;
     }
-    public function getSelectedProject($teamID){
-        return DB::table('projects')
+    public function getSelectedProject($teamID)
+    {
+        $project = DB::table('projects')
             ->where('team_id', $teamID)
             ->select('project_code')
-            ->first()
-            ->project_code;
+            ->first();
 
+        if (!$project) {
+            return redirect()->route('dashboard')->with('error', 'You have no projects');
+        }
+
+        return $project->project_code;
     }
 
 }
