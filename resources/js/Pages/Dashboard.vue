@@ -3,9 +3,30 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Pagination from "@/Components/Paginator.vue";
 import { ref, reactive } from "vue";
 import { Link, router, useForm } from "@inertiajs/vue3";
-import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions, Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import { Listbox,
+        ListboxButton,
+        ListboxLabel,
+        ListboxOption,
+        ListboxOptions,
+        Dialog,
+        DialogPanel,
+        DialogTitle,
+        TransitionChild,
+        TransitionRoot,
+        Menu,
+        MenuButton,
+        MenuItem,
+        MenuItems } from '@headlessui/vue'
 import { } from '@headlessui/vue'
-import { CheckIcon, ChevronUpDownIcon, ChevronDownIcon, LinkIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/vue/20/solid'
+import { CheckIcon,
+        ChevronUpDownIcon,
+        ChevronDownIcon,
+        LinkIcon,
+        PlusIcon,
+        QuestionMarkCircleIcon,
+        XMarkIcon
+
+    } from '@heroicons/vue/20/solid'
 import {
     CalendarIcon,
     ChartPieIcon,
@@ -13,7 +34,8 @@ import {
     FolderIcon,
     HomeIcon,
     UsersIcon,
-    XMarkIcon
+
+    CheckCircleIcon
 } from '@heroicons/vue/24/outline'
 
 
@@ -45,8 +67,8 @@ let submit = () => {
     form.post("/project/store");
     console.log(form);
     console.log(form.selectedTeamId);
-    processesing.value = true;
     form.reset();
+    processesing.value = false;
 }
 
 

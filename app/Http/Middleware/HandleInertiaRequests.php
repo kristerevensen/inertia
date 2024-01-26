@@ -42,6 +42,12 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'message' => fn () => $request->session()->get('message')
             ],
+            'errors' => fn () => $request->session()->get('errors') ? $request->session()->get('errors')->getBag('default')->getMessages() : (object) [],
+            'message' => fn () => $request->session()->get('message'),
+            'user' => fn () => $request->user()
+                ? $request->user()->only('id', 'name', 'email', 'profile_photo_path', 'current_team_id')
+                : null,
+            'success' => fn () => $request->session()->get('success'),
 
             // Lazily adding projects data
             'projects' => fn () => auth()->user()

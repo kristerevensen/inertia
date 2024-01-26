@@ -74,7 +74,7 @@ class ProjectsController extends Controller
         ]);
 
 
-        return redirect()->route('dashboard')->with('success', 'Project created successfully');
+        return redirect()->route('dashboard')->with('message', 'Project created successfully');
     }
     public function delete(Request $request, $project_code)
     {
@@ -83,7 +83,7 @@ class ProjectsController extends Controller
             ->where('owner_id', Auth::user()->id)
             ->delete();
 
-        redirect()->route('dashboard')->with('success', 'Project deleted successfully');
+        redirect()->route('dashboard')->with('message', 'Project deleted successfully');
     }
 
     public function search(Request $request) {

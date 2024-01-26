@@ -15,6 +15,13 @@ class PagesController extends Controller
 {
     protected $project_code;
 
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->project_code = $this->getSelectedProject(Auth::user()->current_team_id);
+            return $next($request);
+        });
+    }
 
     public function index(Request $request, PagesTrend $chart)
     {
@@ -148,12 +155,24 @@ class PagesController extends Controller
         // Parse the query string into an associative array
         $queryParams = [];
         parse_str($queryString, $queryParams);
-        return array_keys($queryParams);
+        return array_keys($queryParams) ?? '';
     }
     public function show(Request $request, $url)
     {
+        DB::enableQueryLog();
+
+
         $fromDate = $request->input('from'); // Retrieve 'from' date from the request
         $toDate = $request->input('to');     // Retrieve 'to' date from the request
+
+        //check to see if the actual url is in the database
+        $urlCheck = DB::table('data_pages')
+            ->where('url_code', $url)
+            ->select('url')
+            ->first();  //returns the first result
+        if (!$urlCheck) {
+            return redirect()->route('pages')->with('message', 'The page you are looking for does not exist');
+        }
 
 
         ### MetricsQuery ###
@@ -175,8 +194,7 @@ class PagesController extends Controller
                 ')
             ->first();
 
-        ### MetricsQuery ###
-        // Metrics query with date filtering
+        ### Page Query ###
         $pageQuery = DataPage::query()
             ->where('project_code', $this->project_code)
             ->where('url_code', $url);
@@ -189,6 +207,7 @@ class PagesController extends Controller
                 *
                 ')
             ->first();
+
         ### Pageview Query ###
         // Pageviews query with date filtering for chart
         $pageviewsQuery = DataPage::query()
@@ -226,14 +245,14 @@ class PagesController extends Controller
         $finalPageviews = $allDatesPageviews->merge($chartPageviews)->values();
 
         $pageviews = response()->json($finalPageviews);
-
+        //dd  ($pageData ? $this->getUrlParameters($pageData->url) : []);
         return Inertia::render('PageShow', [
             'pageviews' => $pageviews,
             'metrics' => $metrics,
             'page' => $pageData,
-            'params' => $this->getUrlParameters($pageData->url),
-            'changes' => $this->getChanges($pageData->url),
-            'sources' => $this->getSources($pageData->url),
+            'params' => $pageData ? $this->getUrlParameters($pageData->url) : [],
+            'changes' => $pageData ? $this->getChanges($pageData->url) : [],
+            'sources' => $pageData ? $this->getSources($pageData->url) : [],
         ]);
     }
     public function getSources($url)
