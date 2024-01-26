@@ -56,9 +56,9 @@ class PagesController extends Controller
 
         $metrics = $metricsQuery->selectRaw('
                 count(distinct(session_id)) as sessions, count(*) as pageviews,
-                count(entrance) as entrances,
-                count(exits) as exits,
-                count(bounce) as bounce
+                sum(entrance) as entrances,
+                sum(exits) as exits,
+                sum(bounce) as bounce
                 ')
             ->first();
 
