@@ -5,7 +5,7 @@ import { computed, defineProps, ref } from 'vue'
 
 const props = defineProps({
     project: Object,
-    projectCode: String,
+    project_code: String,
 });
 
 
@@ -35,6 +35,12 @@ const tabs = [
   { name: 'Settings', href: `/project/${project.project_code}/settings`, current: false },
   { name: 'Filters', href: `/project/${project.project_code}/filters`, current: false },
 ];
+
+const deleteProject = (project_code) => {
+    if (confirm('Are you sure you want to delete this project?')) {
+        Inertia.post(route('project.delete', project_code));
+    }
+}
 </script>
 
 
@@ -253,8 +259,7 @@ const tabs = [
                                 <div
                                     class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
 
-                                    <button type="submit"
-                                        @click="event.preventDefault(); if (confirm('Are you sure you want to delete this project?')) { document.getElementById('delete-project-form').submit(); }"
+                                    <button type="submit" @click="deleteProject(project.url_code)"
                                         class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                                         Delete Project</button>
                                 </div>

@@ -43,6 +43,7 @@ const props = defineProps({
     projects: Object,
     teamsProject: Object,
     errors: Object,
+    can: Object,
 });
 
 const selectedTeam = ref(props.teamsProject[0]);
@@ -87,7 +88,9 @@ let submit = () => {
                 <div>
                     <button type="button"
                         class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        @click="openDialog = true">
+                        @click="openDialog = true"
+                        v-if="can.create_projects">
+
                         Add Project
                     </button>
                 </div>

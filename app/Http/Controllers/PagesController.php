@@ -192,6 +192,7 @@ class PagesController extends Controller
                 sum(exits) as exits,
                 sum(distinct(bounce)) as bounce
                 ')
+                ->sortBy('sessions', 'desc'   )
             ->first();
 
         ### Page Query ###
@@ -355,5 +356,7 @@ class PagesController extends Controller
 
         return $project->project_code;
     }
+
+    
 
 }

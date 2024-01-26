@@ -47,4 +47,19 @@ class DataPage extends Model
      public function project() {
         return $this->belongsTo(Project::class, 'project_code', 'project_code');
     }
+    public static function countIncomingLinks($urlCode,$projectCode)
+    {
+        $dataPage = self::where('url_code', $urlCode)
+                        ->where('project_code', $projectCode)
+                        ->first();
+
+        if (!$dataPage || is_null($dataPage->inbound_links)) {
+            return 0;
+        }
+
+        // Deserialize the inbound_links data
+        $inboundLinks = unserialize($dataPage->inbound_links);
+
+        return is_array($inboundLinks) ? count($inboundLinks) : 0;
+    }
 }

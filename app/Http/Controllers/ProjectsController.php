@@ -35,7 +35,8 @@ class ProjectsController extends Controller
                 ->paginate(5);
         return Inertia::render('Dashboard', [
             'projects' => $projects,
-            'teamsProject' => $teams
+            'teamsProject' => $teams,
+            'can' => ['create_projects' => Auth::user()->can('create', Project::class)]
         ]);
     }
 
@@ -78,12 +79,16 @@ class ProjectsController extends Controller
     }
     public function delete(Request $request, $project_code)
     {
-        $deleted = Project::query()
+        try {
+            $deleted = Project::query()
             ->where('project_code', $project_code)
             ->where('owner_id', Auth::user()->id)
             ->delete();
+            redirect()->route('dashboard')->with('message', 'Project deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('dashboard')->with('message', 'Project not found');
+        }
 
-        redirect()->route('dashboard')->with('message', 'Project deleted successfully');
     }
 
     public function search(Request $request) {
