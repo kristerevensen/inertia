@@ -374,13 +374,13 @@ function drawChart() {
                                                     {{ source.pageviews }}
                                                 </td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                    {{ (source.bounces / source.pageviews * 100).toFixed(0) }}%
+                                                    {{ (source.bounces /  metrics.sessions * 100).toFixed(0) }}%
                                                 </td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                    {{ (source.entrances / source.pageviews * 100).toFixed(0) }}%
+                                                    {{ (source.entrances / metrics.sessions * 100).toFixed(0) }}%
                                                 </td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                    {{ (source.exits / source.pageviews * 100).toFixed(0) }}%
+                                                    {{ (source.exits /  metrics.sessions * 100).toFixed(0) }}%
                                                 </td>
 
                                             </tr>
