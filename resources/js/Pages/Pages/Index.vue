@@ -139,10 +139,10 @@ function drawChart() {
     chart.draw(data, options);
 }
 const tabs = [
-  { name: 'All Pages', href: '/pages', current: false },
-  { name: 'Technical', href: '#', current: false },
-  { name: 'Content', href: '#', current: true },
-  { name: 'Ranking', href: '#', current: false },
+  { name: 'All Pages', href: '/pages', current: true },
+  { name: 'Technical', href: '/pages/technical', current: false },
+  { name: 'Content', href: '/pages/content', current: false },
+  { name: 'Ranking', href: '/pages/ranking', current: false },
 ]
 </script>
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProjectsController;
 use App\Models\Project;
@@ -37,13 +38,22 @@ Route::middleware([
     Route::get('/dashboard', [ProjectsController::class, 'index'])->name('dashboard');
     Route::post('/project/store', [ProjectsController::class, 'store']);
     Route::get('/project/{url_code}/edit', [ProjectsController::class, 'edit']);
-    Route::get('/pages', [PagesController::class, 'index'])->name('pages');
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
-    Route::get('/page/view/{url_code}', [PagesController::class, 'show'])->name('page.view');
 
     Route::get('/project/{url_code}/delete', [ProjectsController::class, 'delete'])->name('project.delete');
 
 
+     // Subpages of /pages
+     Route::get('/pages', [PagesController::class, 'index'])->name('pages');
+     Route::get('/pages/overview', [PagesController::class, 'overview'])->name('pages.overview');
+     Route::get('/pages/technical', [PagesController::class, 'technical'])->name('pages.technical');
+     Route::get('/pages/content', [PagesController::class, 'content'])->name('pages.content');
+     Route::get('/pages/ranking', [PagesController::class, 'ranking'])->name('pages.ranking');
+     Route::get('/page/view/{url_code}', [PagesController::class, 'show'])->name('page.view');
+     Route::get('/page/edit/{url_code}', [PagesController::class, 'edit'])->name('page.edit');
+     Route::get('/page/delete/{url_code}', [PagesController::class, 'delete'])->name('page.delete');
+
+     Route::get('/keywords', [KeywordController::class, 'index'])->name('keywords');
 
 
     Route::get('/users', function () {
@@ -63,9 +73,8 @@ Route::middleware([
 
 
 
-    Route::get('/seo', function () {
-        return Inertia::render('Seo');
-    })->name('seo');
+   
+
 
     Route::get('/campaigns', function () {
         return Inertia::render('Campaigns');

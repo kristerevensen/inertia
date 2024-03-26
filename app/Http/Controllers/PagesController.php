@@ -23,6 +23,8 @@ class PagesController extends Controller
         });
     }
 
+ 
+
     public function index(Request $request, PagesTrend $chart)
     {
         $teamID = DB::table('users')
@@ -138,6 +140,25 @@ class PagesController extends Controller
             'metrics' => $metrics,
             'pageviews' => $pageviews
         ]);
+    }
+    public function technical ()
+    {
+        return Inertia::render('Pages/Technical');
+    }
+
+    public function content ()
+    {
+        return Inertia::render('Pages/Content');
+    }
+
+    public function ranking ()
+    {
+        return Inertia::render('Pages/Ranking');
+    }
+
+    public function overview ()
+    {
+        return Inertia::render('Pages/Overview');
     }
     public function parseURL($url)
     {
