@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProjectsController;
@@ -55,6 +56,8 @@ Route::middleware([
 
      Route::get('/keywords', [KeywordController::class, 'index'])->name('keywords');
 
+     Route::get('campaigns', [CampaignController::class, 'index'])->name('campaigns');
+
 
     Route::get('/users', function () {
         return Inertia::render('Users');
@@ -73,7 +76,7 @@ Route::middleware([
 
 
 
-   
+
 
 
     Route::get('/campaigns', function () {
