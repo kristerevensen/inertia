@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\KeywordController;
+use App\Http\Controllers\LesbarhetsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProjectsController;
 use App\Models\Project;
@@ -71,9 +72,13 @@ Route::middleware([
         return Inertia::render('Settings');
     })->name('settings');
 
+    Route::get('/lesbarhet', [LesbarhetsController::class, 'index'])->name('lesbarhet');
+    Route::post('/lesbarhet', [LesbarhetsController::class, 'beregn'])->name('lesbarhet.beregn');
 
 
-   
+
+
+
 
 
     Route::get('/campaigns', function () {
